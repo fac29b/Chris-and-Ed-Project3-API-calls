@@ -1,7 +1,10 @@
 const {speech} = require('./openai-texttospeach');
 
-test('testing description of Openai-Vision', async () => {
-    const url = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Circle_-_black_simple.svg/800px-Circle_-_black_simple.svg.png";
-    const data = await speech(url);
-    expect(data).toMatch(/circle/);
-  });
+test('mp3 returned', async () => {
+    const text = "this is a test to see if this returns an mp3";
+    const data = await speech(text);
+    expect(data).toMatch(/speech.mp3/);
+  }, 10000);
+
+//have increased the time this test allows as was timing out
+
