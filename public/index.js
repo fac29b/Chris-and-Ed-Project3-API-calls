@@ -7,7 +7,7 @@ form.addEventListener("submit", async function(event) {
 
     var imgUrlInput = document.getElementById("imgUrlInput").value;
 
-    console.log(JSON.stringify({imgUrlInput}));
+    // console.log(JSON.stringify({imgUrlInput}));
     
     const response = await fetch("/submitUrl",{
         method:"POST",
