@@ -23,19 +23,18 @@ async function scrapeImages(url) {
   }
 }
 
+
 // Example usage
-const websiteUrl = 'https://www.christimms.org';
-scrapeImages(websiteUrl)
-  .then(imageUrls => {
-    console.log('Scraped Image URLs:', imageUrls);
-  })
-  .catch(error => {
-    console.error('Error:', error.message);
-  });
+// const websiteUrl = 'https://www.christimms.org';
+// scrapeImages(websiteUrl)
+//   .then(imageUrls => {
+//     console.log('Scraped Image URLs:', imageUrls);
+//   })
+//   .catch(error => {
+//     console.error('Error:', error.message);
+//   });
 
-
-
-
+  module.exports = { scrapeImages };
 
 
 
