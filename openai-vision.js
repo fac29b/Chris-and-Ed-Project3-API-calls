@@ -23,14 +23,8 @@ async function visionRequest(imagesUrl) {
       },
     ],
   });
-  
-  // console.log(response.choices[0]);
+
   return response.choices[0];
 }
 
-// Export this function later
-// main(
-//   "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
-// );
-
-module.exports = { visionRequest }
+module.exports = { visionRequest };

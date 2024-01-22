@@ -9,7 +9,6 @@ const openai = new OpenAI({
 
 const speechFile = path.resolve("./speech.mp3");
 
-
 async function speech(textToConvert) {
   const mp3 = await openai.audio.speech.create({
     model: "tts-1",
@@ -22,5 +21,4 @@ async function speech(textToConvert) {
   return speechFile;
 }
 
-// speech("This is a test text");
-module.exports = { speech }
+module.exports = { speech };
