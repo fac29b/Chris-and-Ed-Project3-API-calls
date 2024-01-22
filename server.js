@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { visionRequest } = require("./openai-vision");
 const { speech } = require("./openai-texttospeach");
+const { fetchImgSearch } = require("./googleimg");
 const { scrapeImages  } = require("./htmlparser");
 
 const express = require("express");
@@ -21,6 +22,17 @@ app.post("/submitUrl", express.json(), async (req, res) => {
     console.log("within server:", speechfile);
 
     res.json({speechfile:speechfile});
+  } catch(error) {
+    console.error("error found:", error);
+  };
+});
+
+app.post("/image-search", express.json(), async (req, res) => {
+  try {
+    // console.log(req.body.searchImage);
+    const imgresultsArray = await fetchImgSearch(req.body.searchImage);
+    // console.log(imgresultsArray);
+    res.json({imgresultsArray:imgresultsArray});
   } catch(error) {
     console.error("error found:", error);
   };
