@@ -1,11 +1,14 @@
 const axios = require('axios');
 const { JSDOM } = require('jsdom');
 
+
 async function scrapeImages(url) {
   try {
+    // console.log("htmlparser: ",url)
     // Fetch HTML content of the website
     const response = await axios.get(url);
     const html = response.data;
+
 
     // Parse HTML using jsdom
     const dom = new JSDOM(html);
@@ -14,15 +17,15 @@ async function scrapeImages(url) {
     // Extract image elements
     const imageElements = document.querySelectorAll('img');
 
-    // Extract image URLs
+    // Extract image URLs - adding original url source at their root
     const imageUrls = Array.from(imageElements).map(img => img.src);
-
+   
     return imageUrls;
   } catch (error) {
     console.error('Error:', error.message);
   }
 }
-
+// scrapeImages("https://www.miketimms.com/");
 
 // Example usage
 // const websiteUrl = 'https://www.christimms.org';

@@ -68,6 +68,9 @@ nav a {
 .images-container img {
   max-width: 30rem;
   max-height: 20rem;
+
+  width:100%;
+  height:auto;
   padding: 1rem;
 }
 
