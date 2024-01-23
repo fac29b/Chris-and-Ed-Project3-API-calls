@@ -50,10 +50,33 @@ form2.addEventListener("submit", async function (event) {
     },
     body: JSON.stringify({ imgUrlInput }),
   });
+
   if (response.ok) {
+
     const result = await response.json();
-    console.log(result);
-  }
+
+    const imagesContainer = document.querySelector(".images-container");
+
+    while (imagesContainer.firstChild) {
+      imagesContainer.removeChild(imagesContainer.firstChild);
+    }
+    for (let i = 0; i < result.scrapedImgUrlArray.length; i++) {
+      imagesContainer.insertAdjacentHTML(
+        "beforeend", // Use a specific string for the position argument
+        `
+            <img class="searchImages"
+              src="${
+                result.scrapedImgUrlArray[i] === undefined
+                  ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"
+                  : result.scrapedImgUrlArray[i]
+              }"
+              alt=""
+            />
+        `
+      );
+    }
+
+  };
 });
 
 // Form 3

@@ -53,14 +53,10 @@ app.post("/submitUrltoscrape", express.json(), async (req, res) => {
     console.log(req.body.imgUrlInput);
 
     const scrapedImgUrlArray = await scrapeImages(req.body.imgUrlInput);
-    console.log(scrapedImgUrlArray);
+    res.json({scrapedImgUrlArray:scrapedImgUrlArray});
 
-    const visionResult = await visionRequest(scrapedImgUrlArray[0]);
-    console.log(visionResult.message.content);
-    //   const speechfile = await speech(visionResult.message.content);
-    //   console.log("within server:", speechfile);
-
-    //   res.json({speechfile:speechfile});
+    // const results = await getScrape(req.body.imgUrlInput);
+    // console.log(results.data);
   } catch (error) {
     console.error("error found:", error);
   }
