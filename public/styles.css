@@ -1,20 +1,19 @@
 @font-face {
   font-family: 'Switzer-Light';
-  src: url("/public/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff2") format("woff2"), 
-  url("/public/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff") format("woff"),
-      url("/public/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.ttf") format("truetype");
+  src: url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff2") format("woff2"), 
+  url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff") format("woff"),
+  url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.ttf") format("truetype");
+      
 
 }
 
 
-
-
-/* @font-face {
+@font-face {
   font-family: 'Satoshi-Medium';
   src: url("/font/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff") format("woff"),
       url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.ttf") format("truetype"),
       url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2") format("woff2");
-} */
+}
 
 :root {
   --background-color: rgb(230, 230, 230);
@@ -34,20 +33,31 @@ body {
   font-family: 'Switzer-Light', monospace;
   margin: 0;
   padding: 0;
-  /* line-height: 1.6rem; */
+  line-height: 1.6rem;
   
 }
 
 h1 {
   color: var(--light-text-color);
-  font-size: 2.4rem;
-  font-family: 'Switzer-Light', monospace;
-  /* font-stretch:1rem;
-    letter-spacing: 0.2rem; */
+  font-size: 6rem;
+  font-family: 'Satoshi-Medium', monospace;
+  letter-spacing: 0.1rem;
+  mix-blend-mode:difference;
 }
 
+
 h2 {
+  color: var(--light-text-color);
+  font-size: 3rem;
+  font-family: 'Satoshi-Medium', monospace;
+  mix-blend-mode:exclusion;
+}
+
+h3 {
   color: var(--dark-text-color);
+  font-size: 1.8rem;
+  font-family: 'Satoshi-Medium', monospace;
+  letter-spacing: 0.05rem;
 }
 
 p {
@@ -178,6 +188,8 @@ button {
   border: none;
   border: 0.15rem solid var(--button-color);
   color: var(--light-text-color);
+  font-size: 1.6rem;
+  font-family: 'Switzer-Light', monospace;
   cursor: pointer;
   border-radius: 0.3rem;
 }
