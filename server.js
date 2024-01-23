@@ -18,9 +18,21 @@ app.post("/submitUrl", express.json(), async (req, res) => {
     console.log(req.body.imgUrlInput);
 
     const visionResult = await visionRequest(req.body.imgUrlInput);
+    console.log(visionResult);
+    if (req.body.radioBtnOption === "description") {
+      res.json({
+        audioAndDescription: false,
+        visionResult: visionResult.message.content,
+      });
+      return;
+    }
     const speechData = await speech(visionResult.message.content);
 
-    res.json({ speechData: speechData });
+    res.json({
+      audioAndDescription: true,
+      speechData: speechData,
+      visionResult: visionResult.message.content,
+    });
   } catch (error) {
     console.error("error found:", error);
   }

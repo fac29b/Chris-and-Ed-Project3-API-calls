@@ -1,5 +1,6 @@
 :root {
   --background-color: rgb(230, 230, 230);
+  --card-bg-color: rgb(255, 226, 208);
   --light-text-color: rgb(240, 240, 240);
   --dark-text-color: rgb(20, 20, 20);
   --button-color: rgb(25, 12, 162);
@@ -63,18 +64,83 @@ nav a {
   flex-wrap: wrap;
   justify-content: center;
   padding: 2rem;
+  margin-bottom: 4rem;
 }
 
-.images-container img {
-  max-width: 30rem;
-  max-height: 20rem;
+.image-card {
+  background-color: var(--card-bg-color);
+  max-width: 25rem;
+  margin: 2rem;
+}
+
+.image-card img {
+  max-width: 25rem;
+}
+
+.image-nav {
+  display: flex;
+  justify-content: space-around;
   padding: 1rem;
 }
 
-input {
+.card-description-audio {
+  padding: 1.5rem;
+}
+
+.loading-anim {
+  display: none;
+  padding: 2rem;
+}
+
+.loading-anim img {
+  width: 4rem;
+  border-radius: 50%;
+  animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text-input {
   padding: 0.9rem;
   width: 20rem;
   margin-right: 1rem;
+}
+
+.radio-input {
+  padding: 0.9rem;
+  margin-right: 1rem;
+}
+
+#description-container {
+  background-color: var(--button-color);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding: 0rem 1.5rem 0rem 1.5rem;
+  width: 60%;
+  border-radius: 0.8rem;
+}
+
+#description-container h2 {
+  color: var(--light-text-color);
+}
+
+#description-container p {
+  color: var(--light-text-color);
+}
+
+#audio-container {
+  margin-bottom: 4rem;
+}
+
+#audio-container p {
+  color: var(--light-text-color);
 }
 
 button {
@@ -91,9 +157,21 @@ button:hover {
   background-color: var(--button-hover-color);
 }
 
+label {
+  display: block;
+  margin: 1rem;
+}
+
+input[type="radio"] {
+  vertical-align: middle;
+}
+
 footer {
-  background-color: var(--background-color);
-  color: var(--dark-text-color);
-  padding: 2rem;
+  position: fixed;
+  bottom: 0;
+  background-color: var(--button-color);
+  color: var(--light-text-color);
+  width: 100%;
+  padding: 1rem;
   text-align: center;
 }

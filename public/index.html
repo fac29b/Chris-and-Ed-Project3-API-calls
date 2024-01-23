@@ -16,18 +16,52 @@
       </nav>
     </header>
 
+    <!--Input image url form-->
     <div class="section active">
       <h2>Input image url</h2>
       <p>get a description of the image in mp3 format and play it.</p>
 
       <form action="" id="input-container">
-        <input type="text" id="imgUrlInput" placeholder="Image url" value="" />
+        <label>
+          <input
+            type="radio"
+            id="audioRadio"
+            name="audioDescription"
+            value="audio"
+            class="radio-input"
+            checked
+          />Audio and Description
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            id="descriptionRadio"
+            name="audioDescription"
+            value="description"
+            class="radio-input"
+          />Description Only
+        </label>
+        <input
+          type="text"
+          id="imgUrlInput"
+          placeholder="Image url"
+          value=""
+          class="text-input"
+        />
         <button type="submit">Submit</button>
       </form>
-      <br />
+      <!--Loading-->
+      <div class="loading-anim">
+        <img src="./images/loading01.webp" alt="Loading image" />
+      </div>
+      <!--Description container-->
+      <div id="description-container"></div>
+      <!--Audio container-->
       <div id="audio-container"></div>
     </div>
 
+    <!--Scrape website form-->
     <div class="section">
       <h2>Scrape website to find images</h2>
       <p>input url of site to scrape images</p>
@@ -38,11 +72,17 @@
           id="submitUrltoscrape"
           placeholder="Website url"
           value=""
+          class="text-input"
         />
         <button type="submit">Submit</button>
       </form>
+      <!--Loading-->
+      <div class="loading-anim">
+        <img src="./images/loading01.webp" alt="Loading image" />
+      </div>
     </div>
 
+    <!--Google search form-->
     <div class="section">
       <h2>Image search</h2>
       <p>image search</p>
@@ -53,12 +93,17 @@
           id="search-input"
           placeholder="Search images"
           value=""
+          class="text-input"
         />
         <button type="submit">Submit</button>
       </form>
+      <!--Loading-->
+      <div class="loading-anim">
+        <img src="./images/loading01.webp" alt="Loading image" />
+      </div>
+      <!--Images container-->
+      <div class="images-container"></div>
     </div>
-
-    <div class="images-container"></div>
 
     <footer>
       <script>
