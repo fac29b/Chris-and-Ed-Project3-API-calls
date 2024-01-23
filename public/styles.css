@@ -8,15 +8,22 @@
 }
 
 @font-face {
-  font-family: 'body-font';
-  src: url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.ttf") format("truetype"),
-       url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.woff") format("woff"),
-       url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.woff2") format("woff2");
+  font-family: 'Switzer-Medium';
+  src: url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.woff") format("woff"),
+      url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.ttf") format("truetype"),
+      url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: 'Satoshi-Medium';
+  src: url("/font/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff") format("woff"),
+      url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.ttf") format("truetype"),
+      url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2") format("woff2");
 }
 
 body {
   background-color: var(--background-color);
-  font-family: 'body-font', Arial, sans-serif;
+  font-family: 'Satoshi-Medium';
   margin: 0;
   padding: 0;
 }
