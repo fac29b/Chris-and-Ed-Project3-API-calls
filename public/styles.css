@@ -31,6 +31,7 @@
 body {
   background-color: var(--background-color);
   font-family: 'Switzer-Light', monospace;
+  font-size: 1.2rem;
   margin: 0;
   padding: 0;
   line-height: 1.6rem;
@@ -42,7 +43,8 @@ h1 {
   font-size: 6rem;
   font-family: 'Satoshi-Medium', monospace;
   letter-spacing: 0.1rem;
-  mix-blend-mode:difference;
+  mix-blend-mode:exclusion;
+  text-rendering: geometricPrecision;
 }
 
 
@@ -55,9 +57,10 @@ h2 {
 
 h3 {
   color: var(--dark-text-color);
-  font-size: 1.8rem;
-  font-family: 'Satoshi-Medium', monospace;
+  font-size: 1.2rem;
+  font-family: 'Switzer-Light', monospace;
   letter-spacing: 0.05rem;
+  margin-top: 2rem;
 }
 
 p {
@@ -79,7 +82,7 @@ p {
 
 nav {
   color: var(--light-text-color);
-  text-align: center;
+  text-align: center; 
 }
 
 nav a {
@@ -150,6 +153,7 @@ nav a {
   padding: 0.9rem;
   width: 20rem;
   margin-right: 1rem;
+  font-size: 1.2rem;
 }
 
 .radio-input {
@@ -192,6 +196,7 @@ button {
   font-family: 'Switzer-Light', monospace;
   cursor: pointer;
   border-radius: 0.3rem;
+  margin:0.45rem;
 }
 
 button:hover {

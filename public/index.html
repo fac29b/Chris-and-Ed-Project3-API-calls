@@ -20,10 +20,19 @@
 
     <!--Input image url form-->
     <div class="section active">
-      <h3>Image Url</h3>
-      <p>Enter the Url of an image and retrieve a written description. Select audio to return the description in an audio file. </p>
+      <!-- <h3>Image Url</h3> -->
+      <h3>Enter the Url of an image and retrieve a written description. Select audio to return the description in an audio file. </h3>
 
       <form action="" id="input-container">
+        
+        <input
+          type="text"
+          id="imgUrlInput"
+          placeholder="Image url"
+          value=""
+          class="text-input"
+        />
+        <button type="submit">Submit</button>
         <label>
           <input
             type="radio"
@@ -44,14 +53,6 @@
             class="radio-input"
           />Description Only
         </label>
-        <input
-          type="text"
-          id="imgUrlInput"
-          placeholder="Image url"
-          value=""
-          class="text-input"
-        />
-        <button type="submit">Submit</button>
       </form>
       <!--Loading-->
       <div class="loading-anim">
@@ -65,8 +66,8 @@
 
     <!--Scrape website form-->
     <div class="section">
-      <h3>Website Url</h3>
-      <p>Input url of a website to retrieve images. Select results to retrieve a description.</p>
+      <!-- <h3>Website Url</h3> -->
+      <h3>Input url of a website to retrieve images. Select results to retrieve a description.</h3>
 
       <form action="" id="input-container2">
         <input
@@ -86,8 +87,8 @@
 
     <!--Google search form-->
     <div class="section">
-      <h3>Image Search</h3>
-      <p>Search for an image. Select results to retrieve a description.</p>
+      <!-- <h3>Image Search</h3> -->
+      <h3>Search for an image. Select results to retrieve a description.</h3>
 
       <form action="" id="search-input-container">
         <input
