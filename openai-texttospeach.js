@@ -7,18 +7,18 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_KEY,
 });
 
-const speechFile = path.resolve("./speech.mp3");
-
 async function speech(textToConvert) {
   const mp3 = await openai.audio.speech.create({
     model: "tts-1",
     voice: "alloy",
     input: textToConvert,
   });
+  const speechFileName = textToConvert.replace(/\s/g, "_").slice(0, 20);
+  const speechFile = path.resolve(`./public/${speechFileName}.mp3`);
   console.log("withintTTS:", speechFile);
   const buffer = Buffer.from(await mp3.arrayBuffer());
   const file = await fs.promises.writeFile(speechFile, buffer);
-  return speechFile;
+  return [speechFile, speechFileName];
 }
 
 module.exports = { speech };

@@ -1,55 +1,99 @@
+:root {
+  --background-color: rgb(230, 230, 230);
+  --light-text-color: rgb(240, 240, 240);
+  --dark-text-color: rgb(20, 20, 20);
+  --button-color: rgb(25, 12, 162);
+  --button-hover-color: rgb(5, 1, 54);
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-  }
-  
-  header {
-    background-color: #3498db;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  nav {
-    background-color: #2c3e50;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-  }
-  
-  section {
-    padding: 20px;
-  }
-  
-  footer {
-    background-color: #ecf0f1;
-    color: #333;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  #input-container {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  input {
-    padding: 10px;
-    margin-right: 10px;
-  }
-  
-  button {
-    padding: 10px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
+  background-color: var(--background-color);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: var(--light-text-color);
+}
+
+h2 {
+  color: var(--dark-text-color);
+}
+
+p {
+  color: var(--dark-text-color);
+}
+
+#header-id {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50vh;
+  text-align: center;
+}
+
+nav {
+  color: var(--light-text-color);
+  text-align: center;
+}
+
+nav a {
+  color: var(--light-text-color);
+  text-decoration: none;
+}
+
+.section {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section.active {
+  display: flex;
+}
+
+.images-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.images-container img {
+  max-width: 30rem;
+  max-height: 20rem;
+  padding: 1rem;
+}
+
+input {
+  padding: 0.9rem;
+  width: 20rem;
+  margin-right: 1rem;
+}
+
+button {
+  padding: 0.8rem 1rem 0.8rem 1rem;
+  background-color: var(--button-color);
+  border: none;
+  border: 0.15rem solid var(--button-color);
+  color: var(--light-text-color);
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+
+button:hover {
+  background-color: var(--button-hover-color);
+}
+
+footer {
+  background-color: var(--background-color);
+  color: var(--dark-text-color);
+  padding: 2rem;
+  text-align: center;
+}
