@@ -1,3 +1,21 @@
+@font-face {
+  font-family: 'Switzer-Light';
+  src: url("/public/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff2") format("woff2"), 
+  url("/public/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff") format("woff"),
+      url("/public/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.ttf") format("truetype");
+
+}
+
+
+
+
+/* @font-face {
+  font-family: 'Satoshi-Medium';
+  src: url("/font/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff") format("woff"),
+      url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.ttf") format("truetype"),
+      url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2") format("woff2");
+} */
+
 :root {
   --background-color: rgb(230, 230, 230);
   --card-bg-color: rgb(255, 226, 208);
@@ -7,29 +25,25 @@
   --button-hover-color: rgb(5, 1, 54);
 }
 
-@font-face {
-  font-family: 'Switzer-Medium';
-  src: url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.woff") format("woff"),
-      url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.ttf") format("truetype"),
-      url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Medium.woff2") format("woff2");
-}
 
-@font-face {
-  font-family: 'Satoshi-Medium';
-  src: url("/font/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff") format("woff"),
-      url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.ttf") format("truetype"),
-      url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2") format("woff2");
-}
+
+
 
 body {
   background-color: var(--background-color);
-  font-family: 'Satoshi-Medium';
+  font-family: 'Switzer-Light', monospace;
   margin: 0;
   padding: 0;
+  /* line-height: 1.6rem; */
+  
 }
 
 h1 {
   color: var(--light-text-color);
+  font-size: 2.4rem;
+  font-family: 'Switzer-Light', monospace;
+  /* font-stretch:1rem;
+    letter-spacing: 0.2rem; */
 }
 
 h2 {
