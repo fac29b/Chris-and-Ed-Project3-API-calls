@@ -18,6 +18,7 @@ const fetchImgSearch = async (searchQuery) => {
       // Parse the JSON response
       const data = await response.json();
       // Access photo information from the data
+      // console.log(data.queries.request);
       //console.log(data.items[0].pagemap.cse_image[0].src);
       return data.items;
     } else {

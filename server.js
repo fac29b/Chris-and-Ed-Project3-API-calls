@@ -28,7 +28,8 @@ app.post("/submitUrl", express.json(), async (req, res) => {
 
 app.post("/image-search", express.json(), async (req, res) => {
   try {
-    const imgResultsArray = await fetchImgSearch(req.body.searchImage);
+    // console.log(req.body);
+    const imgResultsArray = await fetchImgSearch(req.body.searchInput);
     res.json({ imgResultsArray: imgResultsArray });
   } catch (error) {
     console.error("error found:", error);
