@@ -4,50 +4,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
-    <title>Website title</title>
+    <title>ApImg</title>
   </head>
   <body>
-    <header>
-      <h1>Header</h1>
+    <header id="header-id">
+      <h1>ApImg images used differently.</h1>
+      <nav>
+        <button onclick="SwitchBetweenOptions(0)">Input url</button>
+        <button onclick="SwitchBetweenOptions(1)">Scrape website</button>
+        <button onclick="SwitchBetweenOptions(2)">Search images</button>
+      </nav>
     </header>
 
-    <nav>
-      <a href="#">Option</a>
-      <a href="#">Option</a>
-      <a href="#">Option</a>
-    </nav>
-
-    <section>
-      <p>input individual image url</p>
+    <div class="section active">
+      <h2>Input image url</h2>
+      <p>get a description of the image in mp3 format and play it.</p>
 
       <form action="" id="input-container">
-        <input type="text" id="imgUrlInput" placeholder="Enter image url..." value=""/>
+        <input type="text" id="imgUrlInput" placeholder="Image url" value="" />
         <button type="submit">Submit</button>
       </form>
+      <br />
+      <div id="audio-container"></div>
+    </div>
 
-    </section>
-
-    <section>
+    <div class="section">
+      <h2>Scrape website to find images</h2>
       <p>input url of site to scrape images</p>
 
       <form action="" id="input-container2">
-        <input type="text" id="submitUrltoscrape" placeholder="Enter image url..." value=""/>
+        <input
+          type="text"
+          id="submitUrltoscrape"
+          placeholder="Website url"
+          value=""
+        />
         <button type="submit">Submit</button>
       </form>
-      
-    </section>
+    </div>
 
-
-    <section>
+    <div class="section">
+      <h2>Image search</h2>
       <p>image search</p>
 
       <form action="" id="search-input-container">
-        <input type="text" id="search-input" placeholder="Enter image url..." value=""/>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search images"
+          value=""
+        />
         <button type="submit">Submit</button>
       </form>
-    </section>
+    </div>
 
-    <footer>2024 Website footer.</footer>
+    <div class="images-container"></div>
+
+    <footer>
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+      ApImg
+    </footer>
     <script type="text/javascript" src="index.js"></script>
   </body>
 </html>
