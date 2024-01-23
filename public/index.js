@@ -43,6 +43,8 @@ form2.addEventListener("submit", async function (event) {
 
   let imgUrlInput = document.getElementById("submitUrltoscrape").value;
 
+  LoadingAnimation(1);
+
   const response = await fetch("/submitUrltoscrape", {
     method: "POST",
     headers: {
@@ -54,13 +56,53 @@ form2.addEventListener("submit", async function (event) {
   if (response.ok) {
 
     const result = await response.json();
+    LoadingAnimation(1);
 
-    const imagesContainer = document.querySelector(".images-container");
+    const imagesContainer = document.querySelector(".images-container-scrape");
 
     while (imagesContainer.firstChild) {
       imagesContainer.removeChild(imagesContainer.firstChild);
     }
     for (let i = 0; i < result.scrapedImgUrlArray.length; i++) {
+      imagesContainer.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="image-card">
+          <div class="image-container">
+            <img
+              class="searchImages"
+              src="${
+                result.scrapedImgUrlArray[i] === undefined
+                  ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"
+                  : result.scrapedImgUrlArray[i]
+              }"
+              alt=""
+            />
+          </div>
+          <div class="image-nav">
+            <button onclick="">Get Description</button>
+            <button onclick="">Get Description and Audio</button>
+          </div>
+          <div class="card-description-audio">
+            <h3>Description:</h3>
+            <p>
+              This image shows a roller coaster ride in action, with a group of
+              people on board.
+            </p>
+          </div>
+        </div>
+        `
+      );
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    {
       imagesContainer.insertAdjacentHTML(
         "beforeend", // Use a specific string for the position argument
         `
