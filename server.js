@@ -6,7 +6,6 @@ const { scrapeImages } = require("./htmlparser");
 const { FetchRandomPhotoForBg } = require("./randombgimg");
 const { deleteFilesInFolder } = require("./deletemp3");
 
-
 const express = require("express");
 
 const app = express();
@@ -17,10 +16,7 @@ app.use(express.static("public"));
 
 app.post("/submitUrl", express.json(), async (req, res) => {
   try {
-    console.log(req.body.imgUrlInput);
-
     const visionResult = await visionRequest(req.body.imgUrlInput);
-    console.log(visionResult);
     if (req.body.radioBtnOption === "description") {
       res.json({
         audioAndDescription: false,
@@ -42,7 +38,6 @@ app.post("/submitUrl", express.json(), async (req, res) => {
 
 app.post("/image-search", express.json(), async (req, res) => {
   try {
-    // console.log(req.body);
     const imgResultsArray = await fetchImgSearch(req.body.searchInput);
     res.json({ imgResultsArray: imgResultsArray });
   } catch (error) {
@@ -52,13 +47,8 @@ app.post("/image-search", express.json(), async (req, res) => {
 
 app.post("/submitUrltoscrape", express.json(), async (req, res) => {
   try {
-    console.log(req.body.imgUrlInput);
-
     const scrapedImgUrlArray = await scrapeImages(req.body.imgUrlInput);
     res.json({ scrapedImgUrlArray: scrapedImgUrlArray });
-
-    // const results = await getScrape(req.body.imgUrlInput);
-    // console.log(results.data);
   } catch (error) {
     console.error("error found:", error);
   }
@@ -120,7 +110,3 @@ app.post("/getImageAudio", express.json(), async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
-

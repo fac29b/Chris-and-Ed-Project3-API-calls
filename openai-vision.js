@@ -27,7 +27,6 @@ async function visionRequest(imagesUrl) {
       },
     ],
   });
-  console.log(response);
 
   return response.choices[0];
 }

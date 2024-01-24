@@ -10,7 +10,6 @@ const FetchRandomPhotoForBg = async () => {
     if (response.ok) {
       const data = await response.json();
 
-      // console.log(data.urls.raw);
       return data.urls.raw;
     }
   } catch (error) {
