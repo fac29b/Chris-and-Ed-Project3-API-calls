@@ -14,11 +14,12 @@ async function speech(textToConvert) {
     input: textToConvert,
   });
   const speechFileName = textToConvert.replace(/\s/g, "_").slice(0, 20);
-  const speechFile = path.resolve(`./public/${speechFileName}.mp3`);
+  const speechFile = path.resolve(`./public/audio/${speechFileName}.mp3`);
   console.log("withintTTS:", speechFile);
   const buffer = Buffer.from(await mp3.arrayBuffer());
   const file = await fs.promises.writeFile(speechFile, buffer);
   return [speechFile, speechFileName];
 }
+
 
 module.exports = { speech };
