@@ -67,7 +67,6 @@ nav a {
   margin-bottom: 4rem;
 }
 
-
 .image-card {
   background-color: var(--card-bg-color);
   max-width: 25rem;
@@ -85,6 +84,7 @@ nav a {
 }
 
 .card-description-audio {
+  display: none;
   padding: 1.5rem;
 }
 

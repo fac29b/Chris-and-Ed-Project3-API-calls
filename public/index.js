@@ -7,6 +7,7 @@ const header = document.getElementById("header-id");
 // Form 1 Input url
 form1.addEventListener("submit", async function (event) {
   event.preventDefault();
+  console.log("Event: ", event);
 
   let imgUrlInput = document.getElementById("imgUrlInput").value;
   let radioBtnOption = document.querySelector(
@@ -15,7 +16,7 @@ form1.addEventListener("submit", async function (event) {
 
   console.log("radioBtnOption: ", radioBtnOption);
   // Activate loading
-  LoadingAnimation(0);
+  LoadingAnimation("01");
   const response = await fetch("/submitUrl", {
     method: "POST",
     headers: {
@@ -26,7 +27,7 @@ form1.addEventListener("submit", async function (event) {
   if (response.ok) {
     const result = await response.json();
     // Deactivate loading
-    LoadingAnimation(0);
+    LoadingAnimation("01");
     //
     ClearDescriptionAudio();
     if (!result.audioAndDescription) {
@@ -52,7 +53,6 @@ form2.addEventListener("submit", async function (event) {
   });
 
   if (response.ok) {
-
     const result = await response.json();
 
     const imagesContainer = document.querySelector(".images-container");
@@ -75,15 +75,14 @@ form2.addEventListener("submit", async function (event) {
         `
       );
     }
-
-  };
+  }
 });
 
 // Form 3
 form3.addEventListener("submit", async function (event) {
   event.preventDefault();
   // Activate loading
-  LoadingAnimation(2);
+  LoadingAnimation("03");
   //
   let searchInput = document.getElementById("search-input").value;
 
@@ -98,7 +97,7 @@ form3.addEventListener("submit", async function (event) {
   if (response.ok) {
     const result = await response.json();
     // Deactivate loading
-    LoadingAnimation(2);
+    LoadingAnimation("03");
     //
     const imagesContainer = document.querySelector(".images-container");
     while (imagesContainer.firstChild) {
@@ -112,6 +111,7 @@ form3.addEventListener("submit", async function (event) {
         <div class="image-card">
           <div class="image-container">
             <img
+              id="imgSrc${i}"
               class="searchImages"
               src="${
                 result.imgResultsArray[i]?.pagemap?.cse_image?.[0]?.src
@@ -121,15 +121,16 @@ form3.addEventListener("submit", async function (event) {
               alt=""
             />
           </div>
-          <div class="image-nav">
-            <button onclick="">Get Description</button>
-            <button onclick="">Get Description and Audio</button>
+          <div class="image-nav" id="imgNav${i}">
+            <button onclick="RetrieveImageDescription(${i}, 'gleImg${i}')">Get Description</button>
+            <button onclick="RetrieveImgDescriptionAndAudio(${i}, 'gleImg${i}')">Get Description and Audio</button>
+          </div>
+          <div class="loading-anim" id="loading-anim-gleImg${i}">
+            <img src="./images/loading01.webp" alt="Loading image" />
           </div>
           <div class="card-description-audio">
             <h3>Description:</h3>
-            <p>
-              This image shows a roller coaster ride in action, with a group of
-              people on board.
+            <p id="decription${i}">
             </p>
           </div>
         </div>
@@ -157,6 +158,134 @@ async function RetrieveHeaderBgImg() {
     const data = await response.json();
     header.style.backgroundImage = `url(${data.imageUrl})`;
     console.log(data);
+  }
+}
+
+// Retrieve google search image description
+async function RetrieveImageDescription(descriptionId, specialIdIndex) {
+  // Loading animation
+  LoadingAnimation(specialIdIndex.toString());
+  const imageUrl = document.getElementById(`imgSrc${descriptionId}`).src;
+  console.log(imageUrl);
+  const response = await fetch("/getImageDescription", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ imageUrl: imageUrl, descripId: descriptionId }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data);
+    // Loading animation
+    LoadingAnimation(specialIdIndex.toString());
+    // Change active buttons
+    const navButtons = document.getElementById(`imgNav${descriptionId}`);
+    while (navButtons.firstElementChild) {
+      navButtons.removeChild(navButtons.firstElementChild);
+    }
+    navButtons.insertAdjacentHTML(
+      "beforeend",
+      `
+      <button onclick="RetrieveImageAudio(${descriptionId}, '${data.description.replace(
+        /("|')/g,
+        "-"
+      )}', '${specialIdIndex}')">Get Audio</button>
+      `
+    );
+    // Set description to display: block
+    const descriptionToActivate = document.querySelectorAll(
+      ".card-description-audio"
+    );
+    descriptionToActivate[data.descriptionId].style.display = "block";
+    // Input description text between <p>description</p> element
+    const descriptionElement = document.getElementById(
+      `decription${data.descriptionId}`
+    );
+    descriptionElement.textContent = data.description;
+  }
+}
+
+async function RetrieveImageAudio(descriptionId, description, specialIdIndex) {
+  // Loading animation
+  LoadingAnimation(specialIdIndex.toString());
+  const response = await fetch("/getImageAudio", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      descriptionId: descriptionId,
+      description: description,
+    }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    // Loading animation
+    LoadingAnimation(specialIdIndex.toString());
+    // Remove get audio button
+    const navButtons = document.getElementById(`imgNav${descriptionId}`);
+    while (navButtons.firstElementChild) {
+      navButtons.removeChild(navButtons.firstElementChild);
+    }
+    // Insert audio html
+    const descriptionToActivate = document.querySelectorAll(
+      ".card-description-audio"
+    );
+    descriptionToActivate[data.descriptionId].insertAdjacentHTML(
+      "beforeend",
+      `
+      <audio controls>
+        <source src="${data.speechData[1]}.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+      `
+    );
+    console.log(data);
+  }
+}
+
+// Retrieve google search image Description and Audio
+async function RetrieveImgDescriptionAndAudio(descriptionId, specialIdIndex) {
+  // Loading animation
+  LoadingAnimation(specialIdIndex.toString());
+  const imageUrl = document.getElementById(`imgSrc${descriptionId}`).src;
+  console.log(imageUrl);
+  const response = await fetch("/getImgDescriptionAndAudio", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ imageUrl: imageUrl, descripId: descriptionId }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data);
+    // Loading animation
+    LoadingAnimation(specialIdIndex.toString());
+    // Set description to display: block
+    const descriptionToActivate = document.querySelectorAll(
+      ".card-description-audio"
+    );
+    descriptionToActivate[data.descriptionId].style.display = "block";
+    // Input description text between <p>description</p> element
+    const descriptionElement = document.getElementById(
+      `decription${data.descriptionId}`
+    );
+    descriptionElement.textContent = data.description;
+    // Insert audio html
+    descriptionToActivate[data.descriptionId].insertAdjacentHTML(
+      "beforeend",
+      `
+      <audio controls>
+        <source src="${data.speechData[1]}.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+      `
+    );
   }
 }
 
@@ -211,16 +340,16 @@ function ClearDescriptionAudio() {
 }
 
 // Loading animation activate or deactivate
-function LoadingAnimation(index) {
-  const loadingContainer = document.querySelectorAll(".loading-anim");
+function LoadingAnimation(specialIndex) {
+  const loadingContainer = document.getElementById(
+    `loading-anim-${specialIndex}`
+  );
   if (
-    loadingContainer[index].style.display === "none" ||
-    loadingContainer[index].style.display === ""
+    loadingContainer.style.display === "none" ||
+    loadingContainer.style.display === ""
   ) {
-    loadingContainer[index].style.display = "block";
-    console.log("Loading activate!");
+    loadingContainer.style.display = "block";
   } else {
-    loadingContainer[index].style.display = "none";
-    console.log("Loading Deactivate!");
+    loadingContainer.style.display = "none";
   }
 }

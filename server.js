@@ -53,7 +53,7 @@ app.post("/submitUrltoscrape", express.json(), async (req, res) => {
     console.log(req.body.imgUrlInput);
 
     const scrapedImgUrlArray = await scrapeImages(req.body.imgUrlInput);
-    res.json({scrapedImgUrlArray:scrapedImgUrlArray});
+    res.json({ scrapedImgUrlArray: scrapedImgUrlArray });
 
     // const results = await getScrape(req.body.imgUrlInput);
     // console.log(results.data);
@@ -67,6 +67,48 @@ app.post("/retrieveBgImage", express.json(), async (req, res) => {
     const imgUrl = await FetchRandomPhotoForBg();
 
     res.json({ success: true, imageUrl: imgUrl });
+  } catch (error) {
+    console.error("error found:", error);
+  }
+});
+
+app.post("/getImageDescription", express.json(), async (req, res) => {
+  try {
+    const visionResult = await visionRequest(req.body.imageUrl);
+
+    res.json({
+      description: visionResult.message.content,
+      descriptionId: req.body.descripId,
+    });
+  } catch (error) {
+    console.error("error found:", error);
+  }
+});
+
+app.post("/getImgDescriptionAndAudio", express.json(), async (req, res) => {
+  try {
+    const visionResult = await visionRequest(req.body.imageUrl);
+
+    const speechData = await speech(visionResult.message.content);
+
+    res.json({
+      description: visionResult.message.content,
+      descriptionId: req.body.descripId,
+      speechData: speechData,
+    });
+  } catch (error) {
+    console.error("error found:", error);
+  }
+});
+
+app.post("/getImageAudio", express.json(), async (req, res) => {
+  try {
+    const speechData = await speech(req.body.description);
+
+    res.json({
+      descriptionId: req.body.descriptionId,
+      speechData: speechData,
+    });
   } catch (error) {
     console.error("error found:", error);
   }
