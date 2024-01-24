@@ -4,24 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
+
     <title>ApImg</title>
   </head>
   <body>
     <header id="header-id">
-      <h1>ApImg images used differently.</h1>
+      <h1>ApImg</h1>
+      <h2>Images used differently.</h2>
       <nav>
-        <button onclick="SwitchBetweenOptions(0)">Input url</button>
-        <button onclick="SwitchBetweenOptions(1)">Scrape website</button>
-        <button onclick="SwitchBetweenOptions(2)">Search images</button>
+        <button onclick="SwitchBetweenOptions(0)">Image url</button>
+        <button onclick="SwitchBetweenOptions(1)">Website url</button>
+        <button onclick="SwitchBetweenOptions(2)">Image search</button>
       </nav>
     </header>
 
     <!--Input image url form-->
     <div class="section active">
-      <h2>Input image url</h2>
-      <p>get a description of the image in mp3 format and play it.</p>
+      <!-- <h3>Image Url</h3> -->
+      <h3>Enter the Url of an image and retrieve a written description. Select audio to return the description in an audio file. </h3>
 
       <form action="" id="input-container">
+        
+        <input
+          type="text"
+          id="imgUrlInput"
+          placeholder="Image url"
+          value=""
+          class="text-input"
+        />
+        <button type="submit">Submit</button>
         <label>
           <input
             type="radio"
@@ -42,14 +53,6 @@
             class="radio-input"
           />Description Only
         </label>
-        <input
-          type="text"
-          id="imgUrlInput"
-          placeholder="Image url"
-          value=""
-          class="text-input"
-        />
-        <button type="submit">Submit</button>
       </form>
       <!--Loading-->
       <div class="loading-anim" id="loading-anim-01">
@@ -63,8 +66,8 @@
 
     <!--Scrape website form-->
     <div class="section">
-      <h2>Scrape website to find images</h2>
-      <p>input url of site to scrape images</p>
+      <!-- <h3>Website Url</h3> -->
+      <h3>Input url of a website to retrieve images. Select results to retrieve a description.</h3>
 
       <form action="" id="input-container2">
         <input
@@ -80,12 +83,14 @@
       <div class="loading-anim" id="loading-anim-02">
         <img src="./images/loading01.webp" alt="Loading image" />
       </div>
+      <!--Images container-->
+      <div class="images-container-scrape"></div>
     </div>
 
     <!--Google search form-->
     <div class="section">
-      <h2>Image search</h2>
-      <p>image search</p>
+      <!-- <h3>Image Search</h3> -->
+      <h3>Search for an image. Select results to retrieve a description.</h3>
 
       <form action="" id="search-input-container">
         <input
