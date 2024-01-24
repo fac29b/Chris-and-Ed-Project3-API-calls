@@ -7,14 +7,12 @@ const header = document.getElementById("header-id");
 // Form 1 Input url
 form1.addEventListener("submit", async function (event) {
   event.preventDefault();
-  console.log("Event: ", event);
 
   let imgUrlInput = document.getElementById("imgUrlInput").value;
   let radioBtnOption = document.querySelector(
     "input[name='audioDescription']:checked"
   ).value;
 
-  console.log("radioBtnOption: ", radioBtnOption);
   // Activate loading
   LoadingAnimation("01");
   const response = await fetch("/submitUrl", {
@@ -43,8 +41,8 @@ form2.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   let imgUrlInput = document.getElementById("submitUrltoscrape").value;
-
-  LoadingAnimation(1);
+  // Loading
+  LoadingAnimation("02");
 
   const response = await fetch("/submitUrltoscrape", {
     method: "POST",
@@ -56,7 +54,8 @@ form2.addEventListener("submit", async function (event) {
 
   if (response.ok) {
     const result = await response.json();
-    LoadingAnimation(1);
+    // Loading
+    LoadingAnimation("02");
 
     const imagesContainer = document.querySelector(".images-container-scrape");
 
@@ -70,6 +69,7 @@ form2.addEventListener("submit", async function (event) {
         <div class="image-card">
           <div class="image-container">
             <img
+              id="imgSrc-scrapeImg${i}"
               class="searchImages"
               src="${
                 result?.scrapedImgUrlArray[i] === undefined
@@ -79,22 +79,23 @@ form2.addEventListener("submit", async function (event) {
               alt=""
             />
           </div>
-          <div class="image-nav">
-            <button onclick="">Get Description</button>
-            <button onclick="">Get Description and Audio</button>
+          <div class="image-nav" id="imgNav-scrapeImg${i}">
+            <button onclick="RetrieveImageDescription(${i}, 'scrapeImg${i}')">Get Description</button>
+            <button onclick="RetrieveImgDescriptionAndAudio(${i}, 'scrapeImg${i}')">Get Description and Audio</button>
           </div>
-          <div class="card-description-audio">
+          <div class="loading-anim" id="loading-anim-scrapeImg${i}">
+            <img src="./images/loading01.webp" alt="Loading image" />
+          </div>
+          <div class="card-description-audio" id="card-description-audio-scrapeImg${i}">
             <h3>Description:</h3>
-            <p>
-              This image shows a roller coaster ride in action, with a group of
-              people on board.
+            <p id="decription-scrapeImg${i}">
             </p>
           </div>
         </div>
         `
       );
     }
-  };
+  }
 });
 
 // Form 3
@@ -122,7 +123,6 @@ form3.addEventListener("submit", async function (event) {
     while (imagesContainer.firstChild) {
       imagesContainer.removeChild(imagesContainer.firstChild);
     }
-    console.log(result.imgResultsArray);
     for (let i = 0; i < result.imgResultsArray.length; i++) {
       imagesContainer.insertAdjacentHTML(
         "beforeend",
@@ -130,7 +130,7 @@ form3.addEventListener("submit", async function (event) {
         <div class="image-card">
           <div class="image-container">
             <img
-              id="imgSrc${i}"
+              id="imgSrc-gleImg${i}"
               class="searchImages"
               src="${
                 result.imgResultsArray[i]?.pagemap?.cse_image?.[0]?.src
@@ -140,16 +140,16 @@ form3.addEventListener("submit", async function (event) {
               alt=""
             />
           </div>
-          <div class="image-nav" id="imgNav${i}">
+          <div class="image-nav" id="imgNav-gleImg${i}">
             <button onclick="RetrieveImageDescription(${i}, 'gleImg${i}')">Get Description</button>
             <button onclick="RetrieveImgDescriptionAndAudio(${i}, 'gleImg${i}')">Get Description and Audio</button>
           </div>
           <div class="loading-anim" id="loading-anim-gleImg${i}">
             <img src="./images/loading01.webp" alt="Loading image" />
           </div>
-          <div class="card-description-audio">
+          <div class="card-description-audio" id="card-description-audio-gleImg${i}">
             <h3>Description:</h3>
-            <p id="decription${i}">
+            <p id="decription-gleImg${i}">
             </p>
           </div>
         </div>
@@ -176,26 +176,22 @@ async function RetrieveHeaderBgImg() {
   if (response.ok) {
     const data = await response.json();
     header.style.backgroundImage = `url(${data.imageUrl})`;
-    header.setAttribute('aria-label', 'awaiting dynamically created aria-label...');
-    console.log(data.imageUrl);
+    header.setAttribute(
+      "aria-label",
+      "awaiting dynamically created aria-label..."
+    );
     const imgUrlInput = data.imageUrl;
     const response2 = await fetch("/submitUrl", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ imgUrlInput, "radioBtnOption":"description" }),
+      body: JSON.stringify({ imgUrlInput, radioBtnOption: "description" }),
     });
     if (response2.ok) {
       const result = await response2.json();
-      console.log(result.visionResult);
-      header.setAttribute('aria-label', `${result.visionResult}`);
-    };
-
-
-
-
-
+      header.setAttribute("aria-label", `${result.visionResult}`);
+    }
   }
 }
 
@@ -203,8 +199,7 @@ async function RetrieveHeaderBgImg() {
 async function RetrieveImageDescription(descriptionId, specialIdIndex) {
   // Loading animation
   LoadingAnimation(specialIdIndex.toString());
-  const imageUrl = document.getElementById(`imgSrc${descriptionId}`).src;
-  console.log(imageUrl);
+  const imageUrl = document.getElementById(`imgSrc-${specialIdIndex}`).src;
   const response = await fetch("/getImageDescription", {
     method: "POST",
     headers: {
@@ -215,11 +210,10 @@ async function RetrieveImageDescription(descriptionId, specialIdIndex) {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data);
     // Loading animation
     LoadingAnimation(specialIdIndex.toString());
     // Change active buttons
-    const navButtons = document.getElementById(`imgNav${descriptionId}`);
+    const navButtons = document.getElementById(`imgNav-${specialIdIndex}`);
     while (navButtons.firstElementChild) {
       navButtons.removeChild(navButtons.firstElementChild);
     }
@@ -233,13 +227,13 @@ async function RetrieveImageDescription(descriptionId, specialIdIndex) {
       `
     );
     // Set description to display: block
-    const descriptionToActivate = document.querySelectorAll(
-      ".card-description-audio"
+    const descriptionToActivate = document.getElementById(
+      `card-description-audio-${specialIdIndex}`
     );
-    descriptionToActivate[data.descriptionId].style.display = "block";
+    descriptionToActivate.style.display = "block";
     // Input description text between <p>description</p> element
     const descriptionElement = document.getElementById(
-      `decription${data.descriptionId}`
+      `decription-${specialIdIndex}`
     );
     descriptionElement.textContent = data.description;
   }
@@ -264,24 +258,23 @@ async function RetrieveImageAudio(descriptionId, description, specialIdIndex) {
     // Loading animation
     LoadingAnimation(specialIdIndex.toString());
     // Remove get audio button
-    const navButtons = document.getElementById(`imgNav${descriptionId}`);
+    const navButtons = document.getElementById(`imgNav-${specialIdIndex}`);
     while (navButtons.firstElementChild) {
       navButtons.removeChild(navButtons.firstElementChild);
     }
     // Insert audio html
-    const descriptionToActivate = document.querySelectorAll(
-      ".card-description-audio"
+    const descriptionToActivate = document.getElementById(
+      `card-description-audio-${specialIdIndex}`
     );
-    descriptionToActivate[data.descriptionId].insertAdjacentHTML(
+    descriptionToActivate.insertAdjacentHTML(
       "beforeend",
       `
       <audio controls>
-        <source src="${data.speechData[1]}.mp3" type="audio/mp3" />
+        <source src="./audio/${data.speechData[1]}.mp3" type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
       `
     );
-    console.log(data);
   }
 }
 
@@ -289,8 +282,7 @@ async function RetrieveImageAudio(descriptionId, description, specialIdIndex) {
 async function RetrieveImgDescriptionAndAudio(descriptionId, specialIdIndex) {
   // Loading animation
   LoadingAnimation(specialIdIndex.toString());
-  const imageUrl = document.getElementById(`imgSrc${descriptionId}`).src;
-  console.log(imageUrl);
+  const imageUrl = document.getElementById(`imgSrc-${specialIdIndex}`).src;
   const response = await fetch("/getImgDescriptionAndAudio", {
     method: "POST",
     headers: {
@@ -301,25 +293,24 @@ async function RetrieveImgDescriptionAndAudio(descriptionId, specialIdIndex) {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data);
     // Loading animation
     LoadingAnimation(specialIdIndex.toString());
     // Set description to display: block
-    const descriptionToActivate = document.querySelectorAll(
-      ".card-description-audio"
+    const descriptionToActivate = document.getElementById(
+      `card-description-audio-${specialIdIndex}`
     );
-    descriptionToActivate[data.descriptionId].style.display = "block";
+    descriptionToActivate.style.display = "block";
     // Input description text between <p>description</p> element
     const descriptionElement = document.getElementById(
-      `decription${data.descriptionId}`
+      `decription-${specialIdIndex}`
     );
     descriptionElement.textContent = data.description;
     // Insert audio html
-    descriptionToActivate[data.descriptionId].insertAdjacentHTML(
+    descriptionToActivate.insertAdjacentHTML(
       "beforeend",
       `
       <audio controls>
-        <source src="${data.speechData[1]}.mp3" type="audio/mp3" />
+        <source src="./audio/${data.speechData[1]}.mp3" type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
       `
@@ -357,7 +348,7 @@ function AddImgDescriptionAudio(result) {
     "beforeend",
     `
     <audio controls>
-      <source src="${result.speechData[1]}.mp3" type="audio/mp3" />
+      <source src="./audio/${result.speechData[1]}.mp3" type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
     `
@@ -391,5 +382,3 @@ function LoadingAnimation(specialIndex) {
     loadingContainer.style.display = "none";
   }
 }
-
-

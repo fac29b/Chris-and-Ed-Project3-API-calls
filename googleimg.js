@@ -12,8 +12,6 @@ const fetchImgSearch = async (searchQuery) => {
 
     if (response.ok) {
       const data = await response.json();
-      //console.log(data);
-      console.log(data.queries.nextPage);
       return data.items;
     } else {
       throw new Error(`Error: ${response.status}`);
