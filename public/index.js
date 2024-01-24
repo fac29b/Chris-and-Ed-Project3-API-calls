@@ -72,7 +72,7 @@ form2.addEventListener("submit", async function (event) {
             <img
               class="searchImages"
               src="${
-                result.scrapedImgUrlArray[i] === undefined
+                result?.scrapedImgUrlArray[i] === undefined
                   ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"
                   : result.scrapedImgUrlArray[i]
               }"
@@ -102,21 +102,7 @@ form2.addEventListener("submit", async function (event) {
     
     
     
-    {
-      imagesContainer.insertAdjacentHTML(
-        "beforeend", // Use a specific string for the position argument
-        `
-            <img class="searchImages"
-              src="${
-                result.scrapedImgUrlArray[i] === undefined
-                  ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"
-                  : result.scrapedImgUrlArray[i]
-              }"
-              alt=""
-            />
-        `
-      );
-    }
+  
 
   };
 });
@@ -198,7 +184,26 @@ async function RetrieveHeaderBgImg() {
   if (response.ok) {
     const data = await response.json();
     header.style.backgroundImage = `url(${data.imageUrl})`;
-    console.log(data);
+    header.setAttribute('aria-label', 'awaiting dynamically created aria-label...');
+    console.log(data.imageUrl);
+    const imgUrlInput = data.imageUrl;
+    const response2 = await fetch("/submitUrl", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ imgUrlInput, "radioBtnOption":"description" }),
+    });
+    if (response2.ok) {
+      const result = await response2.json();
+      console.log(result.visionResult);
+      header.setAttribute('aria-label', `${result.visionResult}`);
+    };
+
+
+
+
+
   }
 }
 
