@@ -184,7 +184,26 @@ async function RetrieveHeaderBgImg() {
   if (response.ok) {
     const data = await response.json();
     header.style.backgroundImage = `url(${data.imageUrl})`;
-    console.log(data);
+    header.setAttribute('aria-label', 'awaiting dynamically created aria-label...');
+    console.log(data.imageUrl);
+    const imgUrlInput = data.imageUrl;
+    const response2 = await fetch("/submitUrl", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ imgUrlInput, "radioBtnOption":"description" }),
+    });
+    if (response2.ok) {
+      const result = await response2.json();
+      console.log(result.visionResult);
+      header.setAttribute('aria-label', `${result.visionResult}`);
+    };
+
+
+
+
+
   }
 }
 
