@@ -4,6 +4,8 @@ const { speech } = require("./openai-texttospeach");
 const { fetchImgSearch } = require("./googleimg");
 const { scrapeImages } = require("./htmlparser");
 const { FetchRandomPhotoForBg } = require("./randombgimg");
+const { deleteFilesInFolder } = require("./deletemp3");
+
 
 const express = require("express");
 
@@ -65,7 +67,8 @@ app.post("/submitUrltoscrape", express.json(), async (req, res) => {
 app.post("/retrieveBgImage", express.json(), async (req, res) => {
   try {
     const imgUrl = await FetchRandomPhotoForBg();
-
+    //when page is loaded delete mp3 cache
+    deleteFilesInFolder(`./public/audio`);
     res.json({ success: true, imageUrl: imgUrl });
   } catch (error) {
     console.error("error found:", error);
@@ -117,3 +120,7 @@ app.post("/getImageAudio", express.json(), async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+
+
