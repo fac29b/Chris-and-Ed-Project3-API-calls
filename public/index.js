@@ -226,11 +226,11 @@ async function RetrieveImageDescription(descriptionId, specialIdIndex) {
       )}', '${specialIdIndex}')">Get Audio</button>
       `
     );
-    // Set description to display: block
+    // Set description to display: flex
     const descriptionToActivate = document.getElementById(
       `card-description-audio-${specialIdIndex}`
     );
-    descriptionToActivate.style.display = "block";
+    descriptionToActivate.style.display = "flex";
     // Input description text between <p>description</p> element
     const descriptionElement = document.getElementById(
       `decription-${specialIdIndex}`
@@ -269,7 +269,7 @@ async function RetrieveImageAudio(descriptionId, description, specialIdIndex) {
     descriptionToActivate.insertAdjacentHTML(
       "beforeend",
       `
-      <audio controls>
+      <audio controls class="audio-player">
         <source src="./audio/${data.speechData[1]}.mp3" type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
@@ -295,11 +295,11 @@ async function RetrieveImgDescriptionAndAudio(descriptionId, specialIdIndex) {
     const data = await response.json();
     // Loading animation
     LoadingAnimation(specialIdIndex.toString());
-    // Set description to display: block
+    // Set description to display: flex
     const descriptionToActivate = document.getElementById(
       `card-description-audio-${specialIdIndex}`
     );
-    descriptionToActivate.style.display = "block";
+    descriptionToActivate.style.display = "flex";
     // Input description text between <p>description</p> element
     const descriptionElement = document.getElementById(
       `decription-${specialIdIndex}`
@@ -309,7 +309,7 @@ async function RetrieveImgDescriptionAndAudio(descriptionId, specialIdIndex) {
     descriptionToActivate.insertAdjacentHTML(
       "beforeend",
       `
-      <audio controls>
+      <audio controls class="audio-player">
         <source src="./audio/${data.speechData[1]}.mp3" type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
@@ -347,7 +347,7 @@ function AddImgDescriptionAudio(result) {
   audioContainer.insertAdjacentHTML(
     "beforeend",
     `
-    <audio controls>
+    <audio controls class="audio-player">
       <source src="./audio/${result.speechData[1]}.mp3" type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
@@ -377,7 +377,7 @@ function LoadingAnimation(specialIndex) {
     loadingContainer.style.display === "none" ||
     loadingContainer.style.display === ""
   ) {
-    loadingContainer.style.display = "block";
+    loadingContainer.style.display = "flex";
   } else {
     loadingContainer.style.display = "none";
   }

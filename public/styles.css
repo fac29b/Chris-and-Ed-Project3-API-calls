@@ -1,18 +1,21 @@
 @font-face {
-  font-family: 'Switzer-Light';
-  src: url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff2") format("woff2"), 
-  url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff") format("woff"),
-  url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.ttf") format("truetype");
-      
-
+  font-family: "Switzer-Light";
+  src: url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff2")
+      format("woff2"),
+    url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.woff")
+      format("woff"),
+    url("/font/Switzer_Complete/Fonts/WEB/fonts/Switzer-Light.ttf")
+      format("truetype");
 }
 
-
 @font-face {
-  font-family: 'Satoshi-Medium';
-  src: url("/font/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff") format("woff"),
-      url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.ttf") format("truetype"),
-      url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2") format("woff2");
+  font-family: "Satoshi-Medium";
+  src: url("/font/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff")
+      format("woff"),
+    url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.ttf")
+      format("truetype"),
+    url("/font/Switzer_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2")
+      format("woff2");
 }
 
 :root {
@@ -24,41 +27,35 @@
   --button-hover-color: rgb(5, 1, 54);
 }
 
-
-
-
-
 body {
   background-color: var(--background-color);
-  font-family: 'Switzer-Light', monospace;
+  font-family: "Switzer-Light", monospace;
   font-size: 1.2rem;
   margin: 0;
   padding: 0;
   line-height: 1.6rem;
-  
 }
 
 h1 {
   color: var(--light-text-color);
   font-size: 6rem;
-  font-family: 'Satoshi-Medium', monospace;
+  font-family: "Satoshi-Medium", monospace;
   letter-spacing: 0.1rem;
-  mix-blend-mode:exclusion;
+  mix-blend-mode: exclusion;
   text-rendering: geometricPrecision;
 }
-
 
 h2 {
   color: var(--light-text-color);
   font-size: 3rem;
-  font-family: 'Satoshi-Medium', monospace;
-  mix-blend-mode:exclusion;
+  font-family: "Satoshi-Medium", monospace;
+  mix-blend-mode: exclusion;
 }
 
 h3 {
   color: var(--dark-text-color);
   font-size: 1.2rem;
-  font-family: 'Switzer-Light', monospace;
+  font-family: "Switzer-Light", monospace;
   letter-spacing: 0.05rem;
   margin-top: 2rem;
 }
@@ -76,13 +73,13 @@ p {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 50vh;
+  height: 25rem;
   text-align: center;
 }
 
 nav {
   color: var(--light-text-color);
-  text-align: center; 
+  text-align: center;
 }
 
 nav a {
@@ -100,38 +97,75 @@ nav a {
   display: flex;
 }
 
+.images-container-scrape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: calc(100% - 10rem);
+  margin-bottom: 4rem;
+}
+
 .images-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 2rem;
+  width: calc(100% - 10rem);
   margin-bottom: 4rem;
 }
 
 .image-card {
-  background-color: var(--card-bg-color);
-  max-width: 25rem;
-  margin: 2rem;
+  max-width: 30rem;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+
+.image-container {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 30rem;
+  max-width: 35rem;
+  border: 1px solid var(--button-color);
+  border-radius: 1rem 1rem 0rem 0rem;
 }
 
 .image-card img {
-  max-width: 25rem;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 1rem 1rem 0rem 0rem;
 }
 
 .image-nav {
   display: flex;
   justify-content: space-around;
-  padding: 1rem;
+  border-left: 1px solid var(--button-color);
+  border-right: 1px solid var(--button-color);
+  border-bottom: 1px solid var(--button-color);
 }
 
 .card-description-audio {
-  display: none;
+  background-color: var(--button-color);
+  display: none; /* Change to none later */
+  flex-direction: column;
   padding: 1.5rem;
+  border-radius: 0rem 0rem 1rem 1rem;
+  color: var(--light-text-color);
+}
+
+.card-description-audio h3 {
+  color: var(--light-text-color);
+}
+
+.card-description-audio p {
+  color: var(--light-text-color);
 }
 
 .loading-anim {
-  display: none;
+  display: none; /* Change to none later */
   padding: 2rem;
+  justify-content: space-around;
 }
 
 .loading-anim img {
@@ -147,6 +181,12 @@ nav a {
   to {
     transform: rotate(360deg);
   }
+}
+
+.audio-player {
+  display: flex;
+  justify-self: center;
+  align-self: center;
 }
 
 .text-input {
@@ -193,10 +233,10 @@ button {
   border: 0.15rem solid var(--button-color);
   color: var(--light-text-color);
   font-size: 1.6rem;
-  font-family: 'Switzer-Light', monospace;
+  font-family: "Switzer-Light", monospace;
   cursor: pointer;
   border-radius: 0.3rem;
-  margin:0.45rem;
+  margin: 0.45rem;
 }
 
 button:hover {
