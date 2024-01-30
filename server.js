@@ -1,4 +1,7 @@
 require("dotenv").config();
+const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
 const { visionRequest } = require("./openai-vision");
 const { speech } = require("./openai-texttospeach");
 const { fetchImgSearch } = require("./googleimg");
@@ -10,9 +13,26 @@ const express = require("express");
 
 const app = express();
 
+
 const port = 3000;
 
 app.use(express.static("public"));
+
+//init multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Specify the directory where you want to store the uploaded files
+    const uploadDir = 'public/uploads';
+    fs.mkdirSync(uploadDir, { recursive: true });
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    // Use the original file name as the destination file name
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
+
 
 app.post("/submitUrl", express.json(), async (req, res) => {
   try {
@@ -105,6 +125,22 @@ app.post("/getImageAudio", express.json(), async (req, res) => {
   } catch (error) {
     console.error("error found:", error);
   }
+});
+
+// Handle file upload
+app.post('/upload', upload.single('file'), (req, res) => {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  // Process the file as needed (e.g., save it to disk, database, etc.)
+  // For now, just send back a response with the file information.
+  res.json({
+    filename: file.originalname,
+    size: file.size,
+    mimetype: file.mimetype,
+    path: path.join(__dirname, file.path),
+  });
 });
 
 app.listen(port, () => {
