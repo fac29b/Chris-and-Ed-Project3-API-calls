@@ -160,10 +160,16 @@ app.post('/upload', async (req, res) => {
 
   fs.writeFileSync(imagePath, buffer);
 
+  try {
+    const uploadandget = await askAboutImages([imagePath], 'What is in this image?');
+    res.json({ message: 'Image uploaded successfully!' , response: uploadandget});
+  } catch (error) {
+      console.error("error found:", error);
+    }
+
 
 
   
-  res.json({ message: 'Image uploaded successfully!' });
 
 
 
