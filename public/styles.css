@@ -201,7 +201,7 @@ nav a {
   margin-right: 1rem;
 }
 
-#description-container {
+.description-container {
   background-color: var(--button-color);
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -210,19 +210,19 @@ nav a {
   border-radius: 0.8rem;
 }
 
-#description-container h2 {
+.description-container h2 {
   color: var(--light-text-color);
 }
 
-#description-container p {
+.description-container p {
   color: var(--light-text-color);
 }
 
-#audio-container {
+.audio-container {
   margin-bottom: 4rem;
 }
 
-#audio-container p {
+.audio-container p {
   color: var(--light-text-color);
 }
 

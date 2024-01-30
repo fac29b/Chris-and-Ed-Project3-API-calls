@@ -15,6 +15,7 @@
         <button onclick="SwitchBetweenOptions(0)">Image url</button>
         <button onclick="SwitchBetweenOptions(1)">Website url</button>
         <button onclick="SwitchBetweenOptions(2)">Image search</button>
+        <button onclick="SwitchBetweenOptions(3)">Upload Image</button>
       </nav>
     </header>
 
@@ -61,9 +62,9 @@
         <img src="./images/loading01.webp" alt="Loading image" />
       </div>
       <!--Description container-->
-      <div id="description-container"></div>
+      <div id="description-container1" class="description-container"></div>
       <!--Audio container-->
-      <div id="audio-container"></div>
+      <div id="audio-container1" class="audio-container"></div>
     </div>
 
     <!--Scrape website form-->
@@ -114,6 +115,55 @@
       <!--Images container-->
       <div class="images-container"></div>
     </div>
+
+    <!--image upload form-->
+    <div class="section">
+
+      <h3>
+        Upload an image and retrieve a written description. Select
+        audio to return the description in an audio file.
+      </h3>
+
+      <form action="/upload" id="input-container4">
+        <input
+          type="file"
+          name="image"
+          accept="image/*"
+          id="imgUploadInput"
+          required
+        />
+        <button type="submit">Upload</button>
+        <label>
+          <input
+            type="radio"
+            id="audioRadio2"
+            name="audioDescription"
+            value="audio"
+            class="radio-input"
+            checked
+          />Audio and Description
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            id="descriptionRadio2"
+            name="audioDescription"
+            value="description"
+            class="radio-input"
+          />Description Only
+        </label>
+      </form>
+      <!--Loading-->
+      <div class="loading-anim" id="loading-anim-04">
+        <img src="./images/loading01.webp" alt="Loading image" />
+      </div>
+      <!--Description container-->
+      <div id="description-container4" class="description-container"></div>
+      <!--Audio container-->
+      <div id="audio-container4" class="audio-container"></div>
+    </div>
+
 
     <footer>
       <script>

@@ -1,6 +1,7 @@
 const form1 = document.getElementById("input-container");
 const form2 = document.getElementById("input-container2");
 const form3 = document.getElementById("search-input-container");
+const form4 = document.getElementById("input-container4");
 
 const header = document.getElementById("header-id");
 
@@ -27,11 +28,11 @@ form1.addEventListener("submit", async function (event) {
     // Deactivate loading
     LoadingAnimation("01");
     //
-    ClearDescriptionAudio();
+    ClearDescriptionAudio(1);
     if (!result.audioAndDescription) {
-      AddImgDescription(result);
+      AddImgDescription(result, 1);
     } else {
-      AddImgDescriptionAudio(result);
+      AddImgDescriptionAudio(result, 1);
     }
   }
 });
@@ -158,6 +159,58 @@ form3.addEventListener("submit", async function (event) {
     }
   }
 });
+
+// Form 4 IMage upload
+form4.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  let radioBtnOption = document.querySelector(
+    "input[name='audioDescription']:checked"
+  ).value;
+
+  //format file for upload
+  const formData = new FormData();
+  const fileInput = document.querySelector('input[type="file"]');
+  formData.append('file', fileInput.files[0]);
+
+  //upload file to server
+  const response = await fetch('/upload', {
+    method: 'POST',
+    body: formData,
+  });
+
+    if (response.ok) {
+    //get reponse containing url
+    const result = await response.json();
+    let imgUrlInput = result.path;
+    console.log(imgUrlInput);
+
+    // Activate loading
+    LoadingAnimation("04");
+    const response2 = await fetch("/submitUrl", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ imgUrlInput, radioBtnOption }),
+    });
+    if (response2.ok) {
+      const result = await response.json();
+      // Deactivate loading
+      LoadingAnimation("04");
+      //
+      ClearDescriptionAudio(4);
+      if (!result.audioAndDescription) {
+        AddImgDescription(result, 4);
+      } else {
+        AddImgDescriptionAudio(result, 4);
+      }
+    }
+  }
+  
+});
+
+
 
 // OnLoad run some functions
 window.onload = () => {
@@ -328,8 +381,8 @@ function SwitchBetweenOptions(index) {
 }
 
 // Add image description
-function AddImgDescription(result) {
-  const descriptionContainer = document.getElementById("description-container");
+function AddImgDescription(result, idnum) {
+  const descriptionContainer = document.getElementById(`description-container${idnum}`);
   descriptionContainer.insertAdjacentHTML(
     "beforeend",
     `
@@ -342,8 +395,8 @@ function AddImgDescription(result) {
 }
 
 // Add image description and audio
-function AddImgDescriptionAudio(result) {
-  const audioContainer = document.getElementById("audio-container");
+function AddImgDescriptionAudio(result, idnum) {
+  const audioContainer = document.getElementById(`audio-container${idnum}`);
   audioContainer.insertAdjacentHTML(
     "beforeend",
     `
@@ -353,13 +406,13 @@ function AddImgDescriptionAudio(result) {
     </audio>
     `
   );
-  AddImgDescription(result);
+  AddImgDescription(result, idnum);
 }
 
 // Clear description and audio if different result received
-function ClearDescriptionAudio() {
-  const descriptionContainer = document.getElementById("description-container");
-  const audioContainer = document.getElementById("audio-container");
+function ClearDescriptionAudio(idnum) {
+  const descriptionContainer = document.getElementById(`description-container${idnum}`);
+  const audioContainer = document.getElementById(`audio-container${idnum}`);
   if (descriptionContainer.firstElementChild) {
     descriptionContainer.removeChild(descriptionContainer.firstElementChild);
   }
