@@ -233,7 +233,7 @@ form4.addEventListener("submit", async function (event) {
 
 // OnLoad run some functions
 window.onload = () => {
-  //RetrieveHeaderBgImg();
+  RetrieveHeaderBgImg();
 };
 
 // Retrieve a random image from unsplash api to display as header bg
