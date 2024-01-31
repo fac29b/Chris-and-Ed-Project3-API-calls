@@ -25,7 +25,8 @@ async function askAboutImages(imageFilePaths, prompt) {
     ],
     max_tokens: 1000,
   });
-  console.log('RESPONSE HERE', response.choices[0].message.content);
+  // console.log('RESPONSE HERE', response.choices[0].message.content);
+  return response.choices[0].message.content;
 }
 // (async () => {
 //   await askAboutImages(['test.png', 'test-2.png'], 'What is in this image?');
