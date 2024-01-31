@@ -149,6 +149,7 @@ app.post("/getImageAudio", express.json(), async (req, res) => {
 
 // Handle image upload
 app.post('/upload', async (req, res) => {
+  
   const { imageData } = req.body;
 
   // Add logic to save the image to the 'uploads' folder
@@ -160,16 +161,34 @@ app.post('/upload', async (req, res) => {
 
   fs.writeFileSync(imagePath, buffer);
 
+  // console.log("radioBtnOption: ", req.body.radioBtnOption);
+  //initalise image description
   try {
-    const uploadandget = await askAboutImages([imagePath], 'What is in this image?');
-    res.json({ message: 'Image uploaded successfully!' , response: uploadandget});
-  } catch (error) {
-      console.error("error found:", error);
+    const imgUploadandDesc = await askAboutImages([imagePath], 'What is in this image?');
+    console.log(imgUploadandDesc);
+    if (req.body.radioBtnOption === "description") {
+      res.json({
+        audioAndDescription: false,
+        visionResult: imgUploadandDesc,
+      });
+      return;
     }
+    const speechData = await speech(imgUploadandDesc);
+
+    res.json({
+      audioAndDescription: true,
+      speechData: speechData,
+      visionResult: imgUploadandDesc,
+    });
 
 
 
-  
+    // res.json({ message: 'Image uploaded successfully!' , response: imgUploadandDesc });
+  } catch (error) {
+    console.error("error found:", error);
+  }
+
+    // res.json({ message: 'Image uploaded successfully!' , imagePath: imagePath });
 
 
 

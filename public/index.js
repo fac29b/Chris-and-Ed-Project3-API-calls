@@ -165,7 +165,7 @@ form4.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   let radioBtnOption = document.querySelector(
-    "input[name='audioDescription']:checked"
+    "input[name='audioDescription2']:checked"
   ).value;
 
   const file = imageInput.files[0];
@@ -181,11 +181,20 @@ form4.addEventListener("submit", async function (event) {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ imageData: base64Data }),
+            body: JSON.stringify({ imageData: base64Data, radioBtnOption: radioBtnOption }),
           })
           .then(response => response.json())
           .then(data => {
-            console.log(data.message);
+            console.log(data.visionResult);
+
+            ClearDescriptionAudio(4);
+    if (!data.audioAndDescription) {
+      AddImgDescription(data, 4);
+    } else {
+      AddImgDescriptionAudio(data, 4);
+    }
+
+
           })
           .catch(error => {
             console.error('Error:', error);
