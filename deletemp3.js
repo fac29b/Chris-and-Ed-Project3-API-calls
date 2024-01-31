@@ -7,14 +7,12 @@ const unlink = promisify(fs.unlink);
 async function deleteFilesInFolder(folderPath) {
   try {
     // Read the contents of the folder
-    const files = await readdir(folderPath);
+    // const files = await readdir(folderPath);
 
-    // Delete each file in the folder
-    await Promise.all(files.map(async (file) => {
-      const filePath = `${folderPath}/${file}`;
-      await unlink(filePath);
-      console.log(`Deleted: ${filePath}`);
-    }));
+  
+          await unlink(folderPath);
+          console.log(`Deleted: ${folderPath}`);
+   
 
     console.log('All files deleted successfully.');
   } catch (error) {

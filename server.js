@@ -81,8 +81,6 @@ app.post("/submitUrltoscrape", express.json(), async (req, res) => {
 app.post("/retrieveBgImage", express.json(), async (req, res) => {
   try {
     const imgUrl = await FetchRandomPhotoForBg();
-    //when page is loaded delete mp3 cache
-    deleteFilesInFolder(`./public/audio`);
     res.json({ success: true, imageUrl: imgUrl });
   } catch (error) {
     console.error("error found:", error);
@@ -131,22 +129,6 @@ app.post("/getImageAudio", express.json(), async (req, res) => {
   }
 });
 
-// Handle file upload
-// app.post('/upload', upload.single('file'), (req, res) => {
-//   const file = req.file;
-//   if (!file) {
-//     return res.status(400).send('No file uploaded.');
-//   }
-//   // Process the file as needed (e.g., save it to disk, database, etc.)
-//   // For now, just send back a response with the file information.
-//   res.json({
-//     filename: file.originalname,
-//     size: file.size,
-//     mimetype: file.mimetype,
-//     path: path.join(__dirname, file.path),
-//   });
-// });
-
 // Handle image upload
 app.post('/upload', async (req, res) => {
   
@@ -165,7 +147,7 @@ app.post('/upload', async (req, res) => {
   //initalise image description
   try {
     const imgUploadandDesc = await askAboutImages([imagePath], 'What is in this image?');
-    console.log(imgUploadandDesc);
+
     if (req.body.radioBtnOption === "description") {
       res.json({
         audioAndDescription: false,
@@ -193,31 +175,6 @@ app.post('/upload', async (req, res) => {
 
 
 });
-
-//       fs.writeFile(path.join(__dirname, "uploads", req.body.file), data, (err) => {
-//         if (err) {
-//           console.error(err);
-//           res.statusCode = 500;
-//           res.end('Internal Server Error');
-//         } else {
-//           res.statusCode = 200;
-//           res.end('File uploaded successfully');
-//         }
-//       });
-
-
-//   try {
-//   const uploadandget = await askAboutImages([`./public/uploads/${req.body.file}`], 'What is in this image?');
-  
-//   res.json({
-//     uploadandget
-//   })
-//   // Process the file as needed (e.g., save it to disk, database, etc.)
-//   // For now, just send back a response with the file information.
-// } catch (error) {
-//   console.error("error found:", error);
-// }
-
 
 
 app.listen(port, () => {

@@ -2,6 +2,7 @@ require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 const { OpenAI } = require("openai");
+const { deleteFilesInFolder } = require("./deletemp3");
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_KEY,
@@ -17,6 +18,13 @@ async function speech(textToConvert) {
   const speechFile = path.resolve(`./public/audio/${speechFileName}.mp3`);
   const buffer = Buffer.from(await mp3.arrayBuffer());
   const file = await fs.promises.writeFile(speechFile, buffer);
+  
+  setTimeout(() => {
+    
+    //when page is loaded delete mp3 cache
+    deleteFilesInFolder(speechFile);
+
+  }, 15000);
   return [speechFile, speechFileName];
 }
 
