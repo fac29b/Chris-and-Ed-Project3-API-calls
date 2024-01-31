@@ -24,7 +24,7 @@ async function speech(textToConvert) {
     //when page is loaded delete mp3 cache
     deleteFilesInFolder(speechFile);
 
-  }, 15000);
+  }, 300000);
   return [speechFile, speechFileName];
 }
 

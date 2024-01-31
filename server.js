@@ -142,8 +142,6 @@ app.post('/upload', async (req, res) => {
   const imagePath = path.join(__dirname, 'uploads', 'uploaded_image.png');
 
   fs.writeFileSync(imagePath, buffer);
-
-  // console.log("radioBtnOption: ", req.body.radioBtnOption);
   //initalise image description
   try {
     const imgUploadandDesc = await askAboutImages([imagePath], 'What is in this image?');
@@ -163,17 +161,9 @@ app.post('/upload', async (req, res) => {
       visionResult: imgUploadandDesc,
     });
 
-
-
-    // res.json({ message: 'Image uploaded successfully!' , response: imgUploadandDesc });
   } catch (error) {
     console.error("error found:", error);
   }
-
-    // res.json({ message: 'Image uploaded successfully!' , imagePath: imagePath });
-
-
-
 });
 
 
