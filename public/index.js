@@ -172,7 +172,8 @@ form4.addEventListener("submit", async function (event) {
   
       if (file) {
         const reader = new FileReader();
-  
+        // Activate loading
+  LoadingAnimation("04");
         reader.onloadend = () => {
           const base64Data = reader.result.split(',')[1];
   
@@ -186,7 +187,7 @@ form4.addEventListener("submit", async function (event) {
           .then(response => response.json())
           .then(data => {
             console.log(data.visionResult);
-
+            LoadingAnimation("04");
             ClearDescriptionAudio(4);
     if (!data.audioAndDescription) {
       AddImgDescription(data, 4);
@@ -206,35 +207,6 @@ form4.addEventListener("submit", async function (event) {
         console.error('No file selected');
       }
 
-  
-  //   if (response.ok) {
-  //   //get reponse containing url
-  //   const result = await response.json();
-  //   let imgUrlInput = result.path;
-  //   console.log(imgUrlInput);
-
-  //   // Activate loading
-  //   LoadingAnimation("04");
-  //   const response2 = await fetch("/submitUrl", {
-  //     method: "POST",
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({ imgUrlInput, radioBtnOption }),
-  //   });
-  //   if (response2.ok) {
-  //     const result = await response.json();
-  //     // Deactivate loading
-  //     LoadingAnimation("04");
-  //     //
-  //     ClearDescriptionAudio(4);
-  //     if (!result.audioAndDescription) {
-  //       AddImgDescription(result, 4);
-  //     } else {
-  //       AddImgDescriptionAudio(result, 4);
-  //     }
-  //   }
-  // }
   
 });
 
