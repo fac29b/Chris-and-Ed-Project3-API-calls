@@ -8,15 +8,19 @@ const { fetchImgSearch } = require("./googleimg");
 const { scrapeImages } = require("./htmlparser");
 const { FetchRandomPhotoForBg } = require("./randombgimg");
 const { deleteFilesInFolder } = require("./deletemp3");
+const { askAboutImages  } = require("./imgupload");
+
+
 
 const express = require("express");
 
 const app = express();
 
-
 const port = 3000;
 
 app.use(express.static("public"));
+// Parse JSON requests
+app.use(express.json({ limit: '10mb' }));
 
 //init multer storage
 const storage = multer.diskStorage({
@@ -128,20 +132,74 @@ app.post("/getImageAudio", express.json(), async (req, res) => {
 });
 
 // Handle file upload
-app.post('/upload', upload.single('file'), (req, res) => {
-  const file = req.file;
-  if (!file) {
-    return res.status(400).send('No file uploaded.');
-  }
-  // Process the file as needed (e.g., save it to disk, database, etc.)
-  // For now, just send back a response with the file information.
-  res.json({
-    filename: file.originalname,
-    size: file.size,
-    mimetype: file.mimetype,
-    path: path.join(__dirname, file.path),
-  });
+// app.post('/upload', upload.single('file'), (req, res) => {
+//   const file = req.file;
+//   if (!file) {
+//     return res.status(400).send('No file uploaded.');
+//   }
+//   // Process the file as needed (e.g., save it to disk, database, etc.)
+//   // For now, just send back a response with the file information.
+//   res.json({
+//     filename: file.originalname,
+//     size: file.size,
+//     mimetype: file.mimetype,
+//     path: path.join(__dirname, file.path),
+//   });
+// });
+
+// Handle image upload
+app.post('/upload', async (req, res) => {
+  const { imageData } = req.body;
+
+  // Add logic to save the image to the 'uploads' folder
+  // For simplicity, we'll assume 'imageData' contains the base64-encoded image data
+  const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
+  const buffer = Buffer.from(base64Data, 'base64');
+
+  const imagePath = path.join(__dirname, 'uploads', 'uploaded_image.png');
+
+  fs.writeFileSync(imagePath, buffer);
+
+  try {
+    const uploadandget = await askAboutImages([imagePath], 'What is in this image?');
+    res.json({ message: 'Image uploaded successfully!' , response: uploadandget});
+  } catch (error) {
+      console.error("error found:", error);
+    }
+
+
+
+  
+
+
+
 });
+
+//       fs.writeFile(path.join(__dirname, "uploads", req.body.file), data, (err) => {
+//         if (err) {
+//           console.error(err);
+//           res.statusCode = 500;
+//           res.end('Internal Server Error');
+//         } else {
+//           res.statusCode = 200;
+//           res.end('File uploaded successfully');
+//         }
+//       });
+
+
+//   try {
+//   const uploadandget = await askAboutImages([`./public/uploads/${req.body.file}`], 'What is in this image?');
+  
+//   res.json({
+//     uploadandget
+//   })
+//   // Process the file as needed (e.g., save it to disk, database, etc.)
+//   // For now, just send back a response with the file information.
+// } catch (error) {
+//   console.error("error found:", error);
+// }
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

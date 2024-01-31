@@ -168,45 +168,64 @@ form4.addEventListener("submit", async function (event) {
     "input[name='audioDescription']:checked"
   ).value;
 
-  //format file for upload
-  const formData = new FormData();
-  const fileInput = document.querySelector('input[type="file"]');
-  formData.append('file', fileInput.files[0]);
-
-  //upload file to server
-  const response = await fetch('/upload', {
-    method: 'POST',
-    body: formData,
-  });
-
-    if (response.ok) {
-    //get reponse containing url
-    const result = await response.json();
-    let imgUrlInput = result.path;
-    console.log(imgUrlInput);
-
-    // Activate loading
-    LoadingAnimation("04");
-    const response2 = await fetch("/submitUrl", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ imgUrlInput, radioBtnOption }),
-    });
-    if (response2.ok) {
-      const result = await response.json();
-      // Deactivate loading
-      LoadingAnimation("04");
-      //
-      ClearDescriptionAudio(4);
-      if (!result.audioAndDescription) {
-        AddImgDescription(result, 4);
+  const file = imageInput.files[0];
+  
+      if (file) {
+        const reader = new FileReader();
+  
+        reader.onloadend = () => {
+          const base64Data = reader.result.split(',')[1];
+  
+          fetch('/upload', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ imageData: base64Data }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data.message);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        };
+  
+        reader.readAsDataURL(file);
       } else {
-        AddImgDescriptionAudio(result, 4);
+        console.error('No file selected');
       }
-    }
-  }
+
+  
+  //   if (response.ok) {
+  //   //get reponse containing url
+  //   const result = await response.json();
+  //   let imgUrlInput = result.path;
+  //   console.log(imgUrlInput);
+
+  //   // Activate loading
+  //   LoadingAnimation("04");
+  //   const response2 = await fetch("/submitUrl", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({ imgUrlInput, radioBtnOption }),
+  //   });
+  //   if (response2.ok) {
+  //     const result = await response.json();
+  //     // Deactivate loading
+  //     LoadingAnimation("04");
+  //     //
+  //     ClearDescriptionAudio(4);
+  //     if (!result.audioAndDescription) {
+  //       AddImgDescription(result, 4);
+  //     } else {
+  //       AddImgDescriptionAudio(result, 4);
+  //     }
+  //   }
+  // }
   
 });
 
